@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * LoadGenerator class to simulate network requests for load testing.
+ * This class is designed to generate HTTP requests to a specified target URL at a specified frequency,
+ * and track the number of total requests, failures, and the total response time.
+ */
 public class LoadGenerator {
 
     private final String target;
@@ -13,6 +18,12 @@ public class LoadGenerator {
     private int totalFailures;
     private double totalResponseTime;
 
+    /**
+     * Constructor to initialize LoadGenerator with target URL and frequency.
+     *
+     * @param target The URL to which the load requests are sent.
+     * @param frequency The number of requests per second.
+     */
     public LoadGenerator(String target, int frequency) {
         this.target = target;
         this.frequency = frequency;
@@ -21,6 +32,10 @@ public class LoadGenerator {
         this.totalResponseTime = 0;
     }
 
+    /**
+     * Makes a single HTTP GET request to the target URL.
+     * Records the response time and updates the total number of requests and failures.
+     */
     public void makeRequest() {
         long startTime = System.nanoTime();
         try {
@@ -44,6 +59,10 @@ public class LoadGenerator {
         }
     }
 
+    /**
+     * Runs the load generator in a continuous loop.
+     * This method generates load according to the specified frequency and prints the load information.
+     */
     public void run() {
         while (true) {
             long startEpoch = System.nanoTime();
@@ -58,9 +77,9 @@ public class LoadGenerator {
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String formattedDate = dtf.format(LocalDateTime.now());
-            System.out.println("Load Info: " + formattedDate);
+            System.out.println("Load Time: " + formattedDate);
             System.out.println("Failures/Requests: " + totalFailures + " / " + totalRequests);
-            System.out.println("Average Response: " + (totalResponseTime / totalRequests) + "s\n");
+            System.out.println("Average Response = (TotalResponseTime/TotalRequest) : " + (totalResponseTime / totalRequests) + "s\n");
 
             try {
                 TimeUnit.SECONDS.sleep(Math.max(0, 5 - (long) elapsedSeconds));
@@ -72,6 +91,11 @@ public class LoadGenerator {
         }
     }
 
+    /**
+     * Main method to start the LoadGenerator.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         String targetAddress = "http://192.168.0.102:30000/primecheck";
         int requestFrequency = 1; // requests per second
