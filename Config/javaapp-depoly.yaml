@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javabenchmarkapp-deployment
+spec:
+  selector:
+    matchLabels:
+      app: javabenchmarkapp
+  template:
+    metadata:
+      labels:
+        app: javabenchmarkapp
+    spec:
+      containers:
+      - name: javabenchmarkapp-container
+        image: nclcloudcomputing/javabenchmarkapp
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
