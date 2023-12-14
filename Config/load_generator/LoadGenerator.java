@@ -97,8 +97,8 @@ public class LoadGenerator {
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        String targetAddress = "http://192.168.0.102:30000/primecheck";
-        int requestFrequency = 1; // requests per second
+        String targetAddress = "http: // 192.168.0.102:30000/primecheck";
+        int requestFrequency = 10;    // requests per second
         LoadGenerator generator = new LoadGenerator(targetAddress, requestFrequency);
         generator.run();
     }
